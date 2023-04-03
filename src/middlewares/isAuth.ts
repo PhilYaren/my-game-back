@@ -8,7 +8,8 @@ declare module 'express-session' {
 }
 
 function isAuth(req: Request, res: Response, next: NextFunction) {
-  const user = req.session?.user.id;
+  const user = req.session?.user;
+  console.log(user);
   if (user) {
     next();
     return;

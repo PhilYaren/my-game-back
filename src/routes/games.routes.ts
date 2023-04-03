@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get('/', isAuth, async (req, res) => {
   try {
-    // const games = await getAllGames(req.session.user.id);
-    const games = await getAllGames(req.session.user.id);
+    const userId = req.session.user.id;
+    const games = await getAllGames(userId);
 
     res.json(games);
   } catch (e) {

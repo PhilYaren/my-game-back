@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec ts-node src/app.ts"
+    "start": "nodemon --ignore sessions --exec ts-node src/app.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
