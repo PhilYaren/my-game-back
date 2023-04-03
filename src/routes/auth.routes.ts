@@ -39,7 +39,9 @@ router.post('/login', isUnLogged, async (req, res) => {
         res.json(user);
         return;
       }
+      res.status(403).json({ message: 'Invalid password' });
     }
+    res.status(404).json({ message: 'Not found' });
   } catch (e) {
     res.status(500).json({ message: 'Internal server error' });
   }
