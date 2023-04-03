@@ -18,8 +18,9 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  gameSets   Game[]
-  statistics Statistics[]
+  gameSets          Game[]
+  statistics        Statistics[]
+  answeredQuestions answeredQuestions[]
 
   @@map("users")
 }
@@ -34,8 +35,9 @@ model Game {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  categories Category[]
-  statistics Statistics[]
+  categories        Category[]
+  statistics        Statistics[]
+  answeredQuestions answeredQuestions[]
 
   @@map("games")
 }
@@ -68,6 +70,8 @@ model Question {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  answeredQuestions answeredQuestions[]
+
   @@map("questions")
 }
 
@@ -82,4 +86,20 @@ model Statistics {
   gameId Int  @map("game_id")
 
   @@map("statictics")
+}
+
+model answeredQuestions {
+  id       Int     @id @default(autoincrement())
+  answered Boolean @default(false)
+
+  game   Game @relation(fields: [gameId], references: [id])
+  gameId Int  @map("game_id")
+
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int      @map("question_id")
+
+  player   User @relation(fields: [playerId], references: [id])
+  playerId Int  @map("player_id")
+
+  @@map("answered_questions")
 }

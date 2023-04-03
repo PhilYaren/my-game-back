@@ -56,6 +56,17 @@ CREATE TABLE "statictics" (
     CONSTRAINT "statictics_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "answered_questions" (
+    "id" SERIAL NOT NULL,
+    "answered" BOOLEAN NOT NULL DEFAULT false,
+    "game_id" INTEGER NOT NULL,
+    "question_id" INTEGER NOT NULL,
+    "player_id" INTEGER NOT NULL,
+
+    CONSTRAINT "answered_questions_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -76,3 +87,12 @@ ALTER TABLE "statictics" ADD CONSTRAINT "statictics_user_id_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "statictics" ADD CONSTRAINT "statictics_game_id_fkey" FOREIGN KEY ("game_id") REFERENCES "games"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "answered_questions" ADD CONSTRAINT "answered_questions_game_id_fkey" FOREIGN KEY ("game_id") REFERENCES "games"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "answered_questions" ADD CONSTRAINT "answered_questions_question_id_fkey" FOREIGN KEY ("question_id") REFERENCES "questions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "answered_questions" ADD CONSTRAINT "answered_questions_player_id_fkey" FOREIGN KEY ("player_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
