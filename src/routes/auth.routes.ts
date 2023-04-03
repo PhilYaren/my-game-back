@@ -7,9 +7,10 @@ import isUnLogged from '../middlewares/isUnLogged';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const user = req.session.user;
+  const user = req.session?.user;
   if (user) {
     res.json(user);
+    return;
   }
   res.status(401).json({ message: 'Unauthorized' });
 });
@@ -41,6 +42,7 @@ router.post('/login', isUnLogged, async (req, res) => {
         return;
       }
       res.status(403).json({ message: 'Invalid password' });
+      return;
     }
     res.status(404).json({ message: 'Not found' });
   } catch (e) {

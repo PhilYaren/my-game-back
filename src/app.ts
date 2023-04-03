@@ -4,6 +4,7 @@ import FS from 'session-file-store';
 import apiRoutes from './routes/api.routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 dotenv.config();
 
 const FileStore = FS(session);
@@ -29,6 +30,7 @@ const PORT: number | string = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConFig));

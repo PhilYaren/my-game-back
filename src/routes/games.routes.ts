@@ -6,7 +6,9 @@ const router = express.Router();
 
 router.get('/', isAuth, async (req, res) => {
   try {
+    // const games = await getAllGames(req.session.user.id);
     const games = await getAllGames(req.session.user.id);
+
     res.json(games);
   } catch (e) {
     res.status(500).json({ message: 'Internal server error' });
