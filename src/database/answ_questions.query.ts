@@ -8,7 +8,7 @@ export const getQuestions = async (categoryId: number) => {
   });
 };
 
-export const currectAnswer = async (id: number) => {
+export const correctAnswer = async (id: number) => {
   return prisma.question.findFirst({
     where: {
       id,
@@ -31,5 +31,3 @@ export const answQuest = async (
     },
   });
 };
-
-getQuestions(2).then((el) => console.log(el));
