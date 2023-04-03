@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(255)
+  userName  String   @unique @map("username") @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  gameSets   Game[]
+  statistics Statistics[]
+
+  @@map("users")
+}
+
+model Game {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  categories Category[]
+  statistics Statistics[]
+
+  @@map("games")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  game   Game @relation(fields: [gameId], references: [id])
+  gameId Int  @map("game_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  questions Question[]
+
+  @@map("categories")
+}
+
+model Question {
+  id     Int     @id @default(autoincrement())
+  text   String?
+  answer String  @db.VarChar(255)
+  image  String? @db.VarChar(255)
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int      @map("category_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("questions")
+}
+
+model Statistics {
+  id    Int @id @default(autoincrement())
+  score Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  game   Game @relation(fields: [gameId], references: [id])
+  gameId Int  @map("game_id")
+
+  @@map("statictics")
+}
