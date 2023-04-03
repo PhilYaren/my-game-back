@@ -1,7 +1,7 @@
 import prisma from './index';
 
 export const getAllGames = async (userId: number) => {
-  return await prisma.game.findMany({
+  return prisma.game.findMany({
     include: {
       categories: {
         include: {
@@ -18,7 +18,7 @@ export const getAllGames = async (userId: number) => {
 };
 
 export const getGame = async (id: string, userId: number) => {
-  return await prisma.game.findFirst({
+  return prisma.game.findFirst({
     where: {
       id: parseInt(id),
     },

@@ -2,7 +2,7 @@ import prisma from './index';
 import bcrypt from 'bcrypt';
 
 export const getUser = async (id: string) => {
-  return await prisma.user.findFirst({
+  return prisma.user.findFirst({
     where: {
       id: parseInt(id),
     },
@@ -30,7 +30,7 @@ export const createUser = async ({
   password: string;
 }) => {
   const hashedPassword: string = await bcrypt.hash(password, 10);
-  return await prisma.user.create({
+  return prisma.user.create({
     data: {
       email: email,
       userName: userName,
@@ -40,7 +40,7 @@ export const createUser = async ({
 };
 
 export const getUserByUsername = async (userName: string) => {
-  return await prisma.user.findFirst({
+  return prisma.user.findFirst({
     where: {
       userName: userName,
     },
