@@ -43,4 +43,14 @@ router.post('login', async (req, res) => {
   }
 });
 
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
+    res.clearCookie('auth');
+    res.json({ message: 'Logged out' });
+  });
+});
+
 export default router;
