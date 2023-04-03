@@ -36,6 +36,7 @@ CREATE TABLE "categories" (
 CREATE TABLE "questions" (
     "id" SERIAL NOT NULL,
     "text" TEXT,
+    "score" INTEGER NOT NULL,
     "answer" VARCHAR(255) NOT NULL,
     "image" VARCHAR(255),
     "category_id" INTEGER NOT NULL,
