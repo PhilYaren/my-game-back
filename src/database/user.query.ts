@@ -1,10 +1,21 @@
 import prisma from './index';
 import bcrypt from 'bcrypt';
 
-export const getUser = async (id: number) => {
+export const getUser = async (id: string) => {
   return await prisma.user.findFirst({
     where: {
-      id: id,
+      id: parseInt(id),
+    },
+    select: {
+      id: true,
+      userName: true,
+      email: true,
+      statistics: {
+        select: {
+          id: true,
+          score: true,
+        },
+      },
     },
   });
 };

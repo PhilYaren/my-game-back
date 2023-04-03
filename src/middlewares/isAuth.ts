@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { Session } from 'express-session';
 import { User } from '../../types';
 
 declare module 'express-session' {
@@ -8,8 +7,13 @@ declare module 'express-session' {
   }
 }
 
-function isAuth(req: Request<Session>, res: Response, next: NextFunction) {
-  req.session?.user.id;
+function isAuth(req: Request, res: Response, next: NextFunction) {
+  const user = req.session?.user.id;
+  if (user) {
+    next();
+    return;
+  }
+  res.status(401).json({ message: 'Unauthorized' });
 }
 
 export default isAuth;

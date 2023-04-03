@@ -1,6 +1,8 @@
 import express from 'express';
 import { createUser, getUserByUsername } from '../database/user.query';
 import bcrypt from 'bcrypt';
+import isAuth from '../middlewares/isAuth';
+import isUnLogged from '../middlewares/isUnLogged';
 
 const router = express.Router();
 
@@ -12,7 +14,7 @@ router.get('/', (req, res) => {
   res.status(401).json({ message: 'Unauthorized' });
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', isUnLogged, (req, res) => {
   const { email, password, userName } = req.body;
   try {
     const user = createUser({ email, password, userName });
@@ -26,7 +28,7 @@ router.post('/register', (req, res) => {
   }
 });
 
-router.post('login', async (req, res) => {
+router.post('/login', isUnLogged, async (req, res) => {
   const { userName, password } = req.body;
   try {
     const user = await getUserByUsername(userName);
@@ -43,7 +45,7 @@ router.post('login', async (req, res) => {
   }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isAuth, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).json({ message: 'Internal server error' });
