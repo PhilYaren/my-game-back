@@ -14,11 +14,12 @@ router.get('/', (req, res) => {
   res.status(401).json({ message: 'Unauthorized' });
 });
 
-router.post('/register', isUnLogged, (req, res) => {
+router.post('/register', isUnLogged, async (req, res) => {
   const { email, password, userName } = req.body;
   try {
-    const user = createUser({ email, password, userName });
+    const user = await createUser({ email, password, userName });
     if (user) {
+      req.session.user = user;
       res.json(user);
       return;
     }
