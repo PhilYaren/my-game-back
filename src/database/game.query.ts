@@ -25,7 +25,15 @@ export const getGame = async (id: string, userId: number) => {
     include: {
       categories: {
         include: {
-          questions: true,
+          questions: {
+            include: {
+              answeredQuestions: {
+                where: {
+                  playerId: userId,
+                },
+              },
+            },
+          },
         },
       },
       answeredQuestions: {
