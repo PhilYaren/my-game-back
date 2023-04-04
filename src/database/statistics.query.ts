@@ -12,7 +12,7 @@ export async function leaderboard() {
       },
     });
     return leaderboard;
-  } catch (e) {
+  } catch (e: any) {
     console.log(e.message);
     return [];
   }
