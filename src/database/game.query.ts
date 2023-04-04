@@ -52,3 +52,22 @@ export const getGame = async (id: string, userId: number) => {
     },
   });
 };
+
+export const getScore = async (id: string, userId: number) => {
+  const answered = await prisma.answeredQuestions.findMany({
+    where: {
+      playerId: userId,
+      gameId: parseInt(id),
+    },
+    include: {
+      question: true,
+    },
+  });
+  const score: { score: number } = {
+    score: answered.reduce(
+      (acc, cur) => acc + (cur.answered ? cur.question.score : 0),
+      0
+    ),
+  };
+  return score;
+};

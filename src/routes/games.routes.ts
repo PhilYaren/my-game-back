@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllGames, getGame } from '../database/game.query';
+import { getAllGames, getGame, getScore } from '../database/game.query';
 import isAuth from '../middlewares/isAuth';
 
 const router = express.Router();
@@ -20,6 +20,16 @@ router.get('/:id', isAuth, async (req, res): Promise<void> => {
   try {
     const game = await getGame(id, req.session.user.id);
     res.json(game);
+  } catch (e) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.get('/score/:id', isAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const score = await getScore(id, req.session.user.id);
+    res.json(score);
   } catch (e) {
     res.status(500).json({ message: 'Internal server error' });
   }
