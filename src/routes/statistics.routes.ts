@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('user', async (req, res) => {
+router.get('/user', async (req, res) => {
   try {
     const result = await getStatistics(req.session.user.id);
     return res.json(result);
