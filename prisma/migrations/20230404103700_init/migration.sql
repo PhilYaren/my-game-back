@@ -50,6 +50,8 @@ CREATE TABLE "questions" (
 CREATE TABLE "statictics" (
     "id" SERIAL NOT NULL,
     "score" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
     "user_id" INTEGER NOT NULL,
     "game_id" INTEGER NOT NULL,
 
