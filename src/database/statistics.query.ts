@@ -52,7 +52,8 @@ export async function generateStatistics(userId: number, gameId: number) {
     const score = answeredQuestions.reduce((acc, curr) => {
       return acc + (curr.answered ? curr.question.score : 0);
     }, 0);
-    prisma.answeredQuestions.deleteMany({
+    console.log('GameId: ', gameId, 'UserId: ', userId, 'Score: ', score);
+    await prisma.answeredQuestions.deleteMany({
       where: {
         playerId: userId,
         gameId,
