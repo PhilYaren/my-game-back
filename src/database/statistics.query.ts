@@ -17,3 +17,23 @@ export async function leaderboard() {
     return [];
   }
 }
+
+export async function getStatistics(userId: number) {
+  try {
+    return prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      include: {
+        statistics: {
+          include: {
+            game: true,
+          },
+        },
+      },
+    });
+  } catch (e: any) {
+    console.log(e.message);
+    return { message: 'Internal server error' };
+  }
+}
